@@ -4,33 +4,31 @@ Welcome to my LeetCode DSA Practice Repository.
 
 This repository contains solutions to various Data Structures and Algorithms (DSA) problems that I solve regularly while practicing on LeetCode and other coding platforms.
 
-The main goal of this repository is to track my problem-solving journey, improve algorithmic thinking, and build strong DSA fundamentals for technical interviews and coding assessments.
+The main purpose of this repository is to track my daily progress, strengthen problem-solving skills, and build a solid foundation in DSA concepts for coding interviews and assessments.
 
 📚 About the Repository
 
-Contains solutions to problems solved during regular LeetCode practice
+Contains solutions to coding problems solved during daily practice
 
-Problems are organized based on topics and difficulty levels
+Problems are organized into folders based on topics
 
-Solutions are primarily written in Java
+Implementations are primarily written in Java
 
-Each solution generally includes:
+Each solution includes:
 
 Problem description
 
-Approach / Explanation
+Approach
 
-Time Complexity
+Time and space complexity
 
-Space Complexity
+Code
 
-Code implementation
-
-This repository will continue to grow as I solve more problems across different DSA topics.
+This repository will continue to grow as I solve more problems across different topics.
 
 🧠 Topics Covered
 
-This repository includes problems from multiple areas of Data Structures and Algorithms, including:
+The repository will include problems from multiple areas of Data Structures and Algorithms, such as:
 
 Arrays
 
@@ -62,15 +60,13 @@ And more...
 
 🎯 Goals
 
-Maintain consistent LeetCode practice
+Maintain consistent DSA practice
 
-Strengthen problem-solving skills
+Improve problem-solving ability
 
-Improve algorithmic thinking
+Build a well-structured coding portfolio
 
-Build a strong coding portfolio
-
-Prepare for technical interviews and coding challenges
+Prepare for technical interviews and coding tests
 
 🛠 Tech Stack
 
@@ -80,13 +76,12 @@ Platform: LeetCode
 
 IDE: VS Code
 
-📂 Repository Structure
+📈 Repository Structure
 
 Problems are organized into topic-based folders.
+Each folder contains individual solutions to problems from that topic.
 
-Each folder contains solutions to problems related to that specific topic.
-
-Each solution file usually includes:
+Each solution file typically includes:
 
 Question
 
@@ -103,4 +98,4 @@ Debjit Sutar
 GitHub:
 https://github.com/Debjitsutar
 
-⭐ If you find this repository helpful, feel free to star the repository.
+⭐ If you find this repository useful, feel free to star the repository.
