@@ -1,0 +1,46 @@
+// ✅ Question:
+// Given an array nums, check whether the array was originally sorted
+// in non-decreasing order and then possibly rotated.
+//
+// An array is considered sorted and rotated if it can be obtained
+// by taking a sorted array and rotating it some number of times.
+//
+// Return true if the array is sorted and rotated, otherwise return false.
+
+
+// ✅ Approach:
+// 1. Traverse the array and count the number of places where
+//    the current element is greater than the next element.
+//
+// 2. If the array was originally sorted and rotated,
+//    there can be at most one such position.
+//
+// 3. Use modulo to compare the last element with the first element
+//    to handle the circular rotation condition.
+//
+// 4. If the count of such positions is more than 1,
+//    the array is not sorted and rotated.
+//
+// 5. Otherwise, return true.
+
+
+// ✅ Complexity:
+//
+// Time Complexity: O(N)
+// We traverse the array once.
+//
+// Space Complexity: O(1)
+// No extra space is used.
+
+
+// ✅ Code:
+class Solution {
+    public boolean check(int[] nums) {
+        int c=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]>nums[(i+1)%nums.length]) c++;
+        }
+        return c<=1 ? true : false;
+    }
+}
