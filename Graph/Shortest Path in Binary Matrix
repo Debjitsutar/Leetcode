@@ -1,0 +1,96 @@
+// ✅ Question:
+// Given an n × n binary matrix grid, find the length of the
+// shortest clear path from the top-left cell (0,0)
+// to the bottom-right cell (n-1,n-1).
+//
+// The grid contains the following values:
+// 0 → Open cell (can move through)
+// 1 → Blocked cell (cannot pass through)
+//
+// Movement is allowed in 8 directions:
+// up, down, left, right, and all four diagonals.
+//
+// A path length is defined as the total number of cells
+// visited from the source to the destination.
+//
+// If no such path exists, return -1.
+
+
+// ✅ Approach:
+// 1. Let n be the size of the grid.
+// 2. If the starting cell (0,0) or the destination cell (n-1,n-1)
+//    is blocked (value = 1), then no path exists → return -1.
+// 3. Define all 8 possible movement directions
+//    (horizontal, vertical, and diagonal).
+// 4. Use Breadth First Search (BFS) with a queue
+//    because BFS guarantees the shortest path in an
+//    unweighted grid.
+// 5. Store elements in the queue as:
+//    {row, column, distance}.
+// 6. Push the starting cell (0,0) with distance = 1 into the queue.
+// 7. Mark the starting cell as visited by setting grid[0][0] = 1.
+// 8. While the queue is not empty:
+//    - Remove the front cell from the queue.
+//    - If the current cell is the destination (n-1,n-1),
+//      return the distance.
+// 9. For each of the 8 directions:
+//    - Compute the new cell position.
+//    - Check if the new cell is inside the grid.
+//    - Ensure the cell is open (grid value = 0).
+// 10. If valid:
+//     - Add the new cell to the queue with distance + 1.
+//     - Mark it as visited.
+// 11. If BFS finishes and the destination is not reached,
+//     return -1.
+
+
+// ✅ Complexity:
+//
+// Time Complexity: O(N × N)
+// Each cell in the grid is processed at most once.
+//
+// Space Complexity: O(N × N)
+// For the queue used in BFS traversal.
+
+
+// ✅ Code:
+//
+class Solution {
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int n=grid.length;
+
+        if(grid[0][0]==1 || grid[n-1][n-1]==1) return -1;
+
+        int dir[][]={
+            {-1,-1},{-1,0},{-1,1},{0,-1},
+            {0,1},{1,-1},{1,0},{1,1}
+        };
+
+        Queue<int[]> q=new LinkedList<>();
+        q.offer(new int[]{0,0,1});
+        grid[0][0]=1;
+
+        while(!q.isEmpty())
+        {
+            int cur[]=q.poll();
+            int r=cur[0];
+            int c=cur[1];
+            int dist=cur[2];
+
+            if(r==n-1 && c==n-1) return dist;
+
+            for(int d[] : dir)
+            {
+                int nr=r+d[0];
+                int nc=c+d[1];
+
+                if(nr>=0 && nc>=0 && nr<n && nc<n && grid[nr][nc]==0)
+                {
+                    q.offer(new int[]{nr,nc,dist+1});
+                    grid[nr][nc]=1;
+                }
+            }
+        }
+        return -1;
+    }
+}
