@@ -1,0 +1,115 @@
+// ✅ Question:
+// There are n cities connected by flights. Each flight is represented as:
+//
+// {from, to, price}
+//
+// where:
+// from → starting city
+// to → destination city
+// price → cost of the flight.
+//
+// You are given a source city src and a destination city dst.
+//
+// You are also given an integer k which represents the maximum
+// number of stops allowed.
+//
+// Return the cheapest price from src to dst with at most k stops.
+// If no such route exists, return -1.
+
+
+// ✅ Approach:
+// 1. Convert the flights list into an adjacency list to easily
+//    access neighboring cities.
+//
+// 2. Use a queue to perform a level-based traversal similar to BFS.
+//
+// 3. Each element in the queue stores:
+//    {currentCity, totalCost}
+//
+// 4. Maintain a distance array dist[] where:
+//    dist[i] represents the minimum cost to reach city i.
+//
+// 5. Initialize all values in dist[] with infinity
+//    and set dist[src] = 0.
+//
+// 6. Start BFS from the source city and keep track of
+//    the number of stops.
+//
+// 7. For each city in the queue:
+//    - Traverse all its neighboring cities.
+//    - Calculate the new cost:
+//
+//          newCost = currentCost + flightPrice
+//
+//    - If the new cost is smaller than the stored cost:
+//          • Update dist[nextCity]
+//          • Add the neighbor to the queue.
+//
+// 8. Continue the process until the allowed number of
+//    stops (k) is exceeded.
+//
+// 9. If dist[dst] is still infinity, it means the
+//    destination is unreachable → return -1.
+//
+// 10. Otherwise return dist[dst].
+
+
+// ✅ Complexity:
+//
+// Time Complexity: O(E)
+//
+// Explanation:
+// Each flight (edge) is processed at most once for each level
+// up to k stops.
+//
+// Space Complexity: O(V + E)
+//
+// Explanation:
+// Additional space is used for:
+// - Adjacency list
+// - Distance array
+// - Queue used for traversal.
+
+
+// ✅ Code:
+//
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        List<List<int[]>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++) adj.add(new ArrayList<>());
+
+        for(int f[]:flights)
+        {
+            adj.get(f[0]).add(new int[]{f[1],f[2]});
+        }
+        Queue<int[]> q=new LinkedList<>();
+        q.offer(new int[]{src,0});
+        int dist[]=new int[n];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[src]=0;
+        int stops=0;
+
+        while(!q.isEmpty() && stops<=k)
+        {
+            int size=q.size();
+            while(size-- >0)
+            {
+                int cur[]=q.poll();
+                int node=cur[0];
+                int cost=cur[1];
+                for(int nei[]:adj.get(node))
+                {
+                    int next=nei[0];
+                    int price=nei[1];
+                    if(cost+price<dist[next])
+                    {
+                        dist[next]=cost+price;
+                        q.offer(new int[]{next,dist[next]});
+                    }
+                }
+            }
+            stops++;
+        }
+        return dist[dst]==Integer.MAX_VALUE?-1:dist[dst];
+    }
+}
