@@ -1,0 +1,116 @@
+// ✅ Question:
+// You are given a 2D grid heights where heights[r][c] represents
+// the height of a cell.
+//
+// You start at the top-left cell (0,0) and want to reach
+// the bottom-right cell (n-1,m-1).
+//
+// You can move in four directions:
+// up, down, left, and right.
+//
+// The effort of a path is defined as the maximum absolute
+// difference in heights between two consecutive cells in the path.
+//
+// Return the minimum effort required to travel from
+// the top-left cell to the bottom-right cell.
+
+
+// ✅ Approach:
+// 1. Treat each cell in the grid as a node in a graph.
+//
+// 2. Use Dijkstra’s Algorithm because we want to find the
+//    path that minimizes the maximum edge cost.
+//
+// 3. Maintain a 2D distance array dist[][] where
+//    dist[r][c] represents the minimum effort required
+//    to reach that cell.
+//
+// 4. Initialize all cells in dist with infinity
+//    except the starting cell (0,0) which has effort 0.
+//
+// 5. Use a Priority Queue (Min Heap) that stores
+//    {effort, row, column}.
+//
+// 6. Always process the cell with the minimum effort.
+//
+// 7. For each cell, explore its four neighbors
+//    (up, down, left, right).
+//
+// 8. Calculate the effort required to move to the neighbor:
+//
+//       newEffort = max(currentEffort,
+//                       abs(height difference))
+//
+// 9. If the new effort is smaller than the stored effort
+//    for that neighbor:
+//
+//       • Update dist[nr][nc]
+//       • Push the updated cell into the priority queue
+//
+// 10. When the destination cell (n-1,m-1) is reached,
+//     return the effort value.
+
+
+// ✅ Complexity:
+//
+// Time Complexity: O((N × M) log (N × M))
+//
+// Explanation:
+// Each cell may be inserted into the priority queue,
+// and each operation on the priority queue takes
+// logarithmic time.
+//
+// Space Complexity: O(N × M)
+//
+// Explanation:
+// Additional space is used for:
+// - Distance matrix
+// - Priority queue
+
+
+// ✅ Code:
+//
+class Solution {
+    public int minimumEffortPath(int[][] heights) {
+        int n=heights.length;
+        int m=heights[0].length;
+
+        int dist[][]=new int[n][m];
+
+        for(int row[] : dist) Arrays.fill(row,Integer.MAX_VALUE);
+
+        PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)-> a[0]-b[0]);
+
+        pq.offer(new int[]{0,0,0});
+
+        dist[0][0]=0;
+        int dir[][]={{1,0},{-1,0},{0,-1},{0,1}};
+
+        while(!pq.isEmpty())
+        {
+            int cur[]=pq.poll();
+            int effort=cur[0];
+            int r=cur[1];
+            int c=cur[2];
+
+            if(r==n-1 && c==m-1) return effort;
+
+            for(int d[]:dir)
+            {
+                int nr=r+d[0];
+                int nc=c+d[1];
+
+                if(nr>=0 && nc>=0 && nr<n && nc<m)
+                {
+                    int newEffort=Math.max(effort,Math.abs(heights[r][c]-heights[nr][nc]));
+                    if(newEffort<dist[nr][nc])
+                    {
+                        dist[nr][nc]=newEffort;
+                        pq.offer(new int[]{newEffort,nr,nc});
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+}
